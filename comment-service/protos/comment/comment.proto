@@ -1,0 +1,75 @@
+syntax="proto3";
+
+package comment;
+
+service CommentService{
+    rpc CreateComment(CreateCommentRequest) returns(CreateCommentResponse);
+    rpc deleteComment(DeleteCommentRequest) returns(DeleteCommentEmpty);
+    rpc UpdateComment(UpdateCommentRequest) returns(UpdateCommentResponse){}
+    rpc GetComment(GetACommentRequest) returns(GetACommentResponse){}
+    rpc GetAllCommentsByPostId(GetCommentsPostRequest) returns(GetCommentsPostResponse){}
+}
+
+message GetCommentsPostResponse{
+    repeated GetACommentResponse comment = 1;
+}
+
+message GetCommentsPostRequest{
+    int64 post_id = 1;
+}
+
+message GetACommentRequest{
+    int64 id = 1;
+}
+
+message GetACommentResponse{
+    int64 id = 1;
+    int64 user_id = 2;
+    int64 post_id = 3;
+    string description = 4;
+    bool liked = 5;
+    string created_at = 6;
+    string updated_at = 7;
+}
+
+message UpdateCommentRequest{
+    int64 id = 1;
+    int64 user_id = 2;
+    int64 post_id = 3;
+    string description = 4;
+    bool liked = 5;
+}
+
+message UpdateCommentResponse{
+    int64 id = 1;
+    int64 user_id = 2;
+    int64 post_id = 3;
+    string description = 4;
+    bool liked = 5;
+    string created_at = 6;
+    string updated_at = 7;
+}
+
+message DeleteCommentRequest{
+    int64 post_id = 1;
+}
+
+message DeleteCommentEmpty{
+}
+
+message CreateCommentRequest{
+    int64 user_id = 1;
+    int64 post_id = 2;
+    string description = 3;
+    bool liked = 4;
+}
+
+message CreateCommentResponse{
+    int64 id = 1;
+    int64 user_id = 2;
+    int64 post_id = 3;
+    string description = 4;
+    bool liked = 5;
+    string created_at = 6;
+    string updated_at = 7;
+}

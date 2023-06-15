@@ -1,0 +1,99 @@
+definitions:
+  models.ComReq:
+    properties:
+      description:
+        type: string
+      liked:
+        type: boolean
+      post_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  models.ComRes:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      liked:
+        type: boolean
+      post_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  models.PostReq:
+    properties:
+      comment:
+        $ref: '#/definitions/models.ComReq'
+      description:
+        type: string
+      title:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  models.PostRes:
+    properties:
+      comment:
+        $ref: '#/definitions/models.ComRes'
+      description:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  models.UserRequest:
+    properties:
+      last_name:
+        type: string
+      name:
+        type: string
+      post:
+        $ref: '#/definitions/models.PostReq'
+    type: object
+  models.UserResponse:
+    properties:
+      id:
+        type: integer
+      last_name:
+        type: string
+      name:
+        type: string
+      post:
+        $ref: '#/definitions/models.PostRes'
+    type: object
+info:
+  contact: {}
+paths:
+  /users:
+    post:
+      consumes:
+      - application/json
+      description: Through this api can user register
+      parameters:
+      - description: CreateRegister
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: CreateUser
+      tags:
+      - user
+swagger: "2.0"

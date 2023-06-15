@@ -1,0 +1,97 @@
+syntax="proto3";
+
+package post;
+
+service PostService{
+    rpc CreatePost(CreatePostRequest) returns(CreatePostResponse){}
+    rpc GetPostById(GetPostRequest) returns(GetPostResponse){}
+    rpc UpdatePost(UpdatePostRequest) returns(UpdatePostRespoonse){}
+    rpc DeletePost(DeletePostRequest) returns(Empty){}
+}
+
+message GetUserPostsRequest{
+    string user_id = 1;
+    int64 limit = 2;
+    int64 page = 3;
+}
+
+message DeletePostRequest{
+    string id = 1;
+}
+
+message UpdatePostRespoonse{
+    string id = 1;
+    string title = 2;
+    string photo = 3;
+    string user_id = 4;
+    string created_at = 5;
+    string updated_at = 6;
+}
+
+message UpdatePostRequest{
+    string id = 1;
+    string title = 2;
+    string user_id = 4;
+}
+
+message rGetUserPostsResponse{
+    repeated GetUserPostResponse Post = 1;
+}
+
+message Empty{}
+
+message GetUserPostResponse{
+    string id = 1;
+    string title = 2;
+    string photo = 3;
+    string user_id = 4;
+    string created_at = 5;
+    string updated_at = 6;
+}
+
+message GetPostResponse{
+    string id = 1;
+    string title = 2;
+    string photo = 3;
+    string user_id = 4;
+    string created_at = 5;
+    string updated_at = 6;
+}
+
+message GetPostRequest{
+    string id = 1;
+}
+
+message CreatePostResponse{
+    string id = 1;
+    string title = 2;
+    string photo = 3;
+    string user_id = 4;
+    string created_at = 5;
+    CreateCommentResponse comments = 6;
+}
+
+message CreatePostRequest{
+    string title = 1;
+    string user_id = 2;
+    string id = 3;
+    string photo = 4;
+    CreateCommentRequest comments = 5;
+} 
+
+message CreateCommentRequest{
+    string user_id = 1;
+    string post_id = 2;
+    string description = 3;
+    bool liked = 4;
+}
+
+message CreateCommentResponse{
+    string id = 1;
+    string user_id = 2;
+    string post_id = 3;
+    string description = 4;
+    bool liked = 5;
+    string created_at = 6;
+    string updated_at = 7;
+}

@@ -1,0 +1,803 @@
+definitions:
+  models.CreateCommentRequest:
+    properties:
+      description:
+        type: string
+      liked:
+        type: boolean
+      post_id:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.CreateCommentResponse:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      liked:
+        type: boolean
+      post_id:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.CreatePostRequest:
+    properties:
+      comment:
+        $ref: '#/definitions/models.CreateCommentRequest'
+      id:
+        type: string
+      photo:
+        type: string
+      title:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.CreatePostResponse:
+    properties:
+      comment:
+        $ref: '#/definitions/models.CreateCommentResponse'
+      created_at:
+        type: string
+      id:
+        type: string
+      photo:
+        type: string
+      title:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.CreateRegister:
+    properties:
+      code:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  models.CreateUserRequest:
+    properties:
+      code:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      post:
+        $ref: '#/definitions/models.CreatePostRequest'
+      refresh_token:
+        type: string
+      username:
+        type: string
+    type: object
+  models.CreateUserResponse:
+    properties:
+      access_token:
+        type: string
+      code:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      post:
+        $ref: '#/definitions/models.CreatePostResponse'
+      refresh_token:
+        type: string
+      username:
+        type: string
+    type: object
+  models.Empty:
+    type: object
+  models.Error:
+    properties:
+      code:
+        type: integer
+      description:
+        type: string
+      error: {}
+    type: object
+  models.GetAllUserRequest:
+    properties:
+      limit:
+        type: integer
+      page:
+        type: integer
+    type: object
+  models.GetAllUserResponse:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      name:
+        type: string
+      refresh_token:
+        type: string
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+  models.GetAllUsersResponse:
+    properties:
+      users:
+        items:
+          $ref: '#/definitions/models.GetAllUserResponse'
+        type: array
+    type: object
+  models.GetPostResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      photo:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.GetUserPostResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      photo:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.GetUserPostsResponse:
+    properties:
+      posts:
+        items:
+          $ref: '#/definitions/models.GetUserPostResponse'
+        type: array
+    type: object
+  models.GetUserResponse:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      name:
+        type: string
+      refresh_token:
+        type: string
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+  models.Policy:
+    properties:
+      action:
+        type: string
+      domain:
+        type: string
+      user:
+        type: string
+    type: object
+  models.Role:
+    properties:
+      id:
+        type: string
+      type:
+        type: string
+    type: object
+  models.UpdatePostRequest:
+    properties:
+      id:
+        type: string
+      photo:
+        type: string
+      title:
+        type: string
+    type: object
+  models.UpdateUserRequest:
+    properties:
+      email:
+        type: string
+      last_name:
+        type: string
+      name:
+        type: string
+      username:
+        type: string
+    type: object
+  models.UpdateUserResponse:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      name:
+        type: string
+      refresh_token:
+        type: string
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+  models.UpdatedPostResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      photo:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.VerifyResponse:
+    properties:
+      access_token:
+        type: string
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      refresh_token:
+        type: string
+      username:
+        type: string
+    type: object
+host: localhost:7000
+info:
+  contact: {}
+  title: Go-BootCamp N7
+  version: "1.0"
+paths:
+  /post:
+    delete:
+      consumes:
+      - application/json
+      description: This API Can Get Post Info
+      parameters:
+      - description: delete post
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Empty'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get Post
+      tags:
+      - post
+    get:
+      consumes:
+      - application/json
+      description: This API Can Get Post Info
+      parameters:
+      - description: get Post
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.GetPostResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get Post
+      tags:
+      - post
+    put:
+      consumes:
+      - application/json
+      description: This API Can Update Post
+      parameters:
+      - description: Update Post
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdatePostRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.UpdatedPostResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Update Post
+      tags:
+      - post
+  /posts:
+    get:
+      consumes:
+      - application/json
+      description: This API Can Get Post Info
+      parameters:
+      - description: get post by limit
+        in: path
+        name: limit
+        required: true
+        type: string
+      - description: get post by page
+        in: path
+        name: page
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.GetUserPostsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get Post
+      tags:
+      - post
+  /v1/admin/add/policy:
+    post:
+      consumes:
+      - application/json
+      description: This API uses to add policy
+      parameters:
+      - description: Policy
+        in: body
+        name: policy
+        required: true
+        schema:
+          $ref: '#/definitions/models.Policy'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Empty'
+      security:
+      - BearerAuth: []
+      summary: Add policy
+      tags:
+      - admin
+  /v1/admin/add/role:
+    post:
+      consumes:
+      - application/json
+      description: This API uses to give role to user
+      parameters:
+      - description: Role
+        in: body
+        name: policy
+        required: true
+        schema:
+          $ref: '#/definitions/models.Role'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Empty'
+      security:
+      - BearerAuth: []
+      summary: Add role to user
+      tags:
+      - admin
+  /v1/admin/delete/policy:
+    delete:
+      consumes:
+      - application/json
+      description: This API uses to delete policy
+      parameters:
+      - description: Policy
+        in: body
+        name: policy
+        required: true
+        schema:
+          $ref: '#/definitions/models.Policy'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Empty'
+      security:
+      - BearerAuth: []
+      summary: Delete policy
+      tags:
+      - admin
+  /v1/admin/remove/role:
+    post:
+      consumes:
+      - application/json
+      description: This API uses to remove role from user
+      parameters:
+      - description: Role
+        in: body
+        name: policy
+        required: true
+        schema:
+          $ref: '#/definitions/models.Role'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Empty'
+      security:
+      - BearerAuth: []
+      summary: Remove role from user
+      tags:
+      - admin
+  /v1/login/{email}/{password}:
+    get:
+      consumes:
+      - application/json
+      description: This Function get login User
+      parameters:
+      - description: email
+        in: path
+        name: email
+        required: true
+        type: string
+      - description: password
+        in: path
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Login User
+      tags:
+      - Login
+  /v1/login/admin/{email}/{password}:
+    get:
+      consumes:
+      - application/json
+      description: This Function get login admin
+      parameters:
+      - description: email
+        in: path
+        name: email
+        required: true
+        type: string
+      - description: password
+        in: path
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Login Admin
+      tags:
+      - admin
+  /v1/post:
+    post:
+      consumes:
+      - application/json
+      description: This API Can Create Post
+      parameters:
+      - description: Create Post
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreatePostRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.CreatePostResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Create Post
+      tags:
+      - post
+  /v1/register:
+    post:
+      consumes:
+      - application/json
+      description: this registers customer
+      parameters:
+      - description: Register customer
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateRegister'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: register customer
+      tags:
+      - register
+  /v1/user:
+    delete:
+      consumes:
+      - application/json
+      description: This API Can Delete User
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Empty'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Delete User
+      tags:
+      - user
+    get:
+      consumes:
+      - application/json
+      description: This API Can Get User Info
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.GetUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get User
+      tags:
+      - user
+    post:
+      consumes:
+      - application/json
+      description: This API Can Create User
+      parameters:
+      - description: Get Users By LImit Page
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.CreateUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: CrateUser
+      tags:
+      - user
+    put:
+      consumes:
+      - application/json
+      description: This API Can Update All Informations
+      parameters:
+      - description: UpdateUser
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.UpdateUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Update User
+      tags:
+      - user
+  /v1/users:
+    get:
+      consumes:
+      - application/json
+      description: This API Can Get Users By Limit
+      parameters:
+      - description: Get Users By LImit Page
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.GetAllUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.GetAllUsersResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: GetUser
+      tags:
+      - user
+  /v1/verify/{email}/{code}:
+    get:
+      consumes:
+      - application/json
+      description: this registers customer
+      parameters:
+      - description: email
+        in: path
+        name: email
+        required: true
+        type: string
+      - description: code
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.VerifyResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: register customer
+      tags:
+      - register
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

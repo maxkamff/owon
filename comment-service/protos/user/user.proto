@@ -1,0 +1,203 @@
+syntax="proto3";
+
+package user;
+
+service UserService{
+    rpc CreateUser(CreateUserRequest) returns(CreateUserResponse){}
+    rpc GetUserById(GetUserRequest) returns(GetUserResponse){}
+    rpc GetAllUsers(getAllUserRequest) returns(GetAllUsersResponse){}
+    rpc UpdateUser(UpdateUserRequest) returns(UpdateUserRespoonse){}
+    rpc SearchUser(SearchUserRequest) returns(SearchUsersResponse){}
+    rpc DeleteUser(DeleteUserRequest) returns(Empty){}
+    rpc CheckField(CheckFeildRequest) returns(CheckFeildResponse){}
+    rpc GetByEmail(Email) returns(LoginResponse){}
+    rpc UpdateTokens(TokenRequest) returns(TokenResponse){}
+    rpc GetUserRole(CheckRoleRequest) returns(CheckRoleResponse){}
+}
+
+message CheckRoleResponse{
+    string id = 1;
+    string role = 2;
+}
+
+message CheckRoleRequest{
+    string id = 1;
+}
+
+message TokenResponse{
+    string refresh_token = 1;
+    string updated_at = 2;
+}
+
+message TokenRequest{
+    string id = 1;
+    string refresh_token = 2;
+}
+
+message LoginResponse{
+    string id = 1;
+    string name = 2;
+    string last_name = 3;
+    string email = 4;
+    string created_at = 5;
+    string username = 6;
+    string password = 7;
+    string refresh_token = 8;
+    string access_token = 9;
+    string updated_at = 10;
+}
+
+message Email{
+    string email = 1;
+}
+
+message getAllUserRequest{
+    int64 limit = 1;
+    int64 page = 2;
+}
+
+message CheckFeildRequest{
+    string feild = 1;
+    string value = 2;
+}
+
+message CheckFeildResponse{
+    bool exists = 1;
+}
+
+message DeleteUserRequest{
+    string id = 1;
+}
+
+message SearchUsersResponse{
+    repeated SearchUserResponse user = 1;
+}
+
+message SearchUserResponse{
+    string id = 1;
+    string name = 2;
+    string last_name = 3;
+    string email = 4;
+    string created_at = 5;
+    string updated_at = 6;
+    string username = 7;
+    string refresh_token = 8;
+}
+
+message SearchUserRequest{
+    string name = 1;
+}
+
+message UpdateUserRespoonse{
+    string id = 1;
+    string name = 2;
+    string last_name = 3;
+    string email = 4;
+    string created_at = 5;
+    string updated_at = 6;
+    string username = 7;
+    string refresh_token = 8;
+}
+
+message UpdateUserRequest{
+    string id = 1;
+    string name = 2;
+    string last_name = 3;
+    string email = 4;
+    string username = 5;
+    
+}
+
+message GetAllUsersResponse{
+    repeated GetAllUserResponse user = 1;
+}
+
+message Empty{}
+
+message GetAllUserResponse{
+    string id = 1;
+    string name = 2;
+    string last_name = 3;
+    string email = 4;
+    string created_at = 5;
+    string updated_at = 6;
+    string username = 7;
+    string refresh_token = 8;
+    string access_token = 9;
+}
+
+message GetUserResponse{
+    string id = 1;
+    string name = 2;
+    string last_name = 3;
+    string email = 4;
+    string username = 5;
+    string created_at = 6;
+    string updated_at = 7;
+    string refresh_token = 8;
+    string access_token = 9;
+    
+}
+
+message GetUserRequest{
+    string id = 1;
+}
+
+message CreateUserResponse{
+    string id = 1;
+    string name = 2;
+    string last_name = 3;
+    string email = 4;
+    string created_at = 5;
+    string username = 6;
+    string password = 7;
+    string refresh_token = 8;
+    string access_token = 9;
+    CreatePostResponse posts = 10;
+}
+
+message CreateUserRequest{
+    string id = 1;
+    string name = 2;
+    string last_name = 3;
+    string email = 4;
+    string username = 5;
+    string password = 6;
+    string refresh_token = 7;
+    string code = 8;
+    CreatePostRequest posts = 9;
+} 
+
+message CreateCommentRequest{
+    string user_id = 1;
+    string post_id = 2;
+    string description = 3;
+    bool liked = 4;
+}
+
+message CreateCommentResponse{
+    string id = 1;
+    string user_id = 2;
+    string post_id = 3;
+    string description = 4;
+    bool liked = 5;
+    string created_at = 6;
+    string updated_at = 7;
+}
+
+message CreatePostResponse{
+    string id = 1;
+    string title = 2;
+    string photo = 3;
+    string user_id = 4;
+    string created_at = 5;
+    CreateCommentResponse comments = 6;
+}
+
+message CreatePostRequest{
+    string title = 1;
+    string user_id = 2;
+    string id = 3;
+    string photo = 4;
+    CreateCommentRequest comments = 5;
+}

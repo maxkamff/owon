@@ -1,0 +1,76 @@
+package config
+
+import (
+	"os"
+
+	"github.com/spf13/cast"
+)
+
+// Config ...
+type Config struct {
+	Environment string // develop, staging, production
+
+	PostgresHost       string
+	PostgresPort       string
+	PostgresDatabase   string
+	PostgresUser       string
+	PostgresPassword   string
+	UserServiceHost string
+	UserServicePort string
+	PostServiceHost string
+	PostServicePort string
+	CommentServiceHost string
+	CommentServicePort string
+	RedisHost string 
+	RedisPort string
+
+	CasbinConfigPath string
+
+	SignInKey string
+	// context timeout in seconds
+	CtxTimeout int
+
+	LogLevel string
+	HTTPPort string
+}
+
+// Load loads environment vars and inflates Config
+func Load() Config {
+	c := Config{}
+
+	c.PostgresUser = cast.ToString(getOrReturnDefault("POSTGRES_USER", "maxkamff"))
+	c.PostgresPassword = cast.ToString(getOrReturnDefault("POSTGRES_PASSWORD", "12345"))
+	c.PostgresHost = cast.ToString(getOrReturnDefault("POSTGRES_HOST", "localhost"))
+	c.PostgresPort = cast.ToString(getOrReturnDefault("POSTGRES_PORT", "5432"))
+	c.PostgresDatabase = cast.ToString(getOrReturnDefault("POSTGRES_DATABASE", "user_db"))
+
+	c.Environment = cast.ToString(getOrReturnDefault("ENVIRONMENT", "develop"))
+
+	c.LogLevel = cast.ToString(getOrReturnDefault("LOG_LEVEL", "debug"))
+	c.UserServiceHost = cast.ToString(getOrReturnDefault("USER_SERVICE_HOST", "localhost"))
+	c.UserServicePort = cast.ToString(getOrReturnDefault("USER_SERVICE_PORT", "9000"))
+	c.PostServiceHost = cast.ToString(getOrReturnDefault("POST_SERVICE_HOST", "localhost"))
+	c.PostServicePort = cast.ToString(getOrReturnDefault("POST_SERVICE_PORT", "8000"))
+	c.CommentServiceHost = cast.ToString(getOrReturnDefault("COMMENT_SERVICE_HOST", "localhost"))
+	c.CommentServicePort = cast.ToString(getOrReturnDefault("COMMENT_SERVICE_PORT", "8080"))
+	c.RedisHost = cast.ToString(getOrReturnDefault("REDIS_HOST", "localhost"))
+	c.RedisPort = cast.ToString(getOrReturnDefault("REDIS_PORT", 6379))
+
+	c.CasbinConfigPath = cast.ToString(getOrReturnDefault("CASBIN_CONFIG_PATH", "./config/rbac_model.conf"))
+	c.SignInKey = cast.ToString(getOrReturnDefault("SIGNING_KEY", "$2a$12$Hoqy/cSHirMLtSKIO6.UE.KjbSgDYWR3t72/L.DsQICRHloqT31gC "))
+	
+	c.HTTPPort = cast.ToString(getOrReturnDefault("HTTP_PORT", ":7000"))
+
+	c.CtxTimeout = cast.ToInt(getOrReturnDefault("CTX_TIMEOUT", 7))
+
+	return c
+}
+
+func getOrReturnDefault(key string, defaultValue interface{}) interface{} {
+	_, exists := os.LookupEnv(key)
+	if exists {
+		return os.Getenv(key)
+	}
+
+	return defaultValue
+}
